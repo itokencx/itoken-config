@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: itoken-eureka
+  boot:
+    admin:
+      client:
+        url: http://localhost:8084
+  zipkin:
+    base-url: http://localhost:9411
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+
+    registerWithEureka: true #表示是否将自身注册到Eureka，由于要构建集群配置环境，必须注册
+    fetchRegistry: true   #表示是否从Eureka获取注册信息，单一config节点可以false，但这里是集群必须true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info
